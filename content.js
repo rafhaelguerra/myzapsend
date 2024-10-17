@@ -6,13 +6,9 @@ watchMsgs = function () {
     
     div_array.forEach(div => {
         console.log(div)
-        console.log(div.textContent)
+        // console.log(div.textContent); // texto
     });
     
-}
-
-teste = function (el) {
-    console.log('teste de click', el)
 }
 
 
@@ -25,15 +21,15 @@ const timer = setInterval(()=>{
     const header = document.querySelector('.x1qlqyl8.x1pd3egz.xcgk4ki');
 
     if(header){        
-        clearInterval(timer);
+        // clearInterval(timer);
 
         const button = document.createElement('button');
         button.innerHTML = 'reading...';
         button.classList.add('bt-reading');
 
-        button.addEventListener('click', () => {
-            watchMsgs();
-        });
+        // button.addEventListener('click', () => {
+        watchMsgs();
+        // });
 
         header.appendChild(button);
 
@@ -41,5 +37,5 @@ const timer = setInterval(()=>{
 
 
 
-},1500)
+},10000)
 
