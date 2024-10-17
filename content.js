@@ -19,8 +19,8 @@ watchMsgs = function () {
         let typeMessage         = '';
         
         // verifica se eh aviso de conta empresarial
-        if(dArr[index].querySelector('._amki')) {
-            console.log('tem info de  empresa');
+        if(dArr[index].querySelector('._amki') || dArr[index].querySelector('._amkg')) {
+            console.log('tem info inicial');
             continue;
         } else {
             
