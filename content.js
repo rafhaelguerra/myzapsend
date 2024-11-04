@@ -6,19 +6,15 @@ watchMsgs = function () {
         console.log('looping lendo...');
 
         const messages = [];
+        const dados = [];
+        
         typeof messages;
 
         const msgs  = document.querySelectorAll('._amjv._aotl')
         console.log('|| - lendo chat... - ||')
         const dArr = [...msgs];
         
-        // dArr.forEach(div => {
-        //     console.log(div)
-        //     // console.log(div.textContent); // texto
-        //     messages.destinatario
-        // });
-        // console.log('dArr tot = ' + dArr.length);
-
+        
         for (let index = 0; index < dArr.length; index++) {
             let typeMessage         = '';
             
@@ -48,10 +44,19 @@ watchMsgs = function () {
                 console.log('mensagem = ', mensagem);
                 console.log('id mensagem = ', idMensagem);
                 console.log('Tel destinatário = ', idTelefoneDestinatario);
-                console.log('___________________________________________________')
+                console.log('___________________________________________________');
+
+                dados[index] = {
+                    "tipoMensagem"  : typeMessage == 'message-out' ? 'remetente' : 'destinatário', 
+                    "dataMsg"       : timeMEssage,
+                    "mensagem"      : mensagem,
+                    "idMdg"         : idMensagem,
+                    "tel"           : idTelefoneDestinatario,
+                };
 
             }
-
+            
+            console.log(dados);
 
 
             // dArr[index].querySelector('.message-out').textContent; // mensagem ok
