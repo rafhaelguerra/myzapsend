@@ -1,7 +1,7 @@
 
 watchMsgs = function () {
 
-    const reading = setInterval(() =>{
+    // const reading = setInterval(() =>{
 
         console.log('looping lendo...');
 
@@ -41,7 +41,7 @@ watchMsgs = function () {
                     typeMessage = 'message-in'; // destinatario
                 }
         
-                mensagem = dArr[index].querySelector("."+typeMessage).textContent
+                mensagem = dArr[index].querySelector("."+typeMessage).querySelector("span[dir]").querySelector("span:not(.x1lliihq)").textContent
         
                 console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
                 console.log('data mensagem = ', timeMEssage);
@@ -58,7 +58,7 @@ watchMsgs = function () {
             
         }
 
-    },10000);
+    // },10000);
     
 }
 
