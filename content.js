@@ -6,11 +6,9 @@ watchMsgs = function () {
     console.log('looping lendo...');
 
     const endpoint  = "https://one-webhook-chat-hj57u.ondigitalocean.app/api/v1/one/web-whatsapp/webhook";
-    const messages  = [];
-    const dados     = [];
     const dadosMsg  = [];
 
-    typeof messages;
+    // typeof messages;
 
     const msgs = document.querySelectorAll('._amjv._aotl')
     console.log('|| - lendo chat... - ||')
@@ -65,11 +63,6 @@ watchMsgs = function () {
             //let timeMEssage = dArr[index].querySelector('.copyable-text').getAttribute('data-pre-plain-text').split('[')[1].split(']')[0];
             let idMensagem = dArr[index].getAttribute('data-id');
             let idTelefoneDestinatario = dArr[index].getAttribute('data-id').split('_')[1].split('@')[0];
-            
-
-           
-
-            
 
             /* console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
             console.log('data mensagem = ', timeMEssage);
@@ -78,30 +71,17 @@ watchMsgs = function () {
             console.log('Tel destinatário = ', idTelefoneDestinatario);
             console.log('___________________________________________________'); */
 
-            /* dados[index] = {
-                "tipoMensagem"  : typeMessage == 'message-out' ? 'remetente' : 'destinatário', 
-                "dataMsg"       : timeMEssage,
-                "mensagem"      : mensagem,
-                "idMdg"         : idMensagem,
-                "tel"           : idTelefoneDestinatario,
-            }; */
 
-            dados[index] = {
-                "app": "privatepartners",
-                "chat_id": "00000fixo-ONE",
+            dadosMsg[index] = {
+                "message_id": idMensagem,
+                "message": mensagem,
+                "file": null,
+                "date": timeMEssage,
+                "direction": typeMessage == "message-out" ? 'OUTGOING' : 'INTGOING',
+                "name_to": "???",
+                "phone_to": idTelefoneDestinatario,
                 "name_from": typeMessage == 'message-out' ? 'Eu' : 'destinatário',
                 "phone_from": idTelefoneDestinatario,
-                "messages": [
-                    {
-                        "message_id": idMensagem,
-                        "message": mensagem,
-                        "file": null,
-                        "date": timeMEssage,
-                        "direction": typeMessage == "message-out" ? 'OUTGOING' : 'INTGOING',
-                        "name_to": "???",
-                        "phone_to": idTelefoneDestinatario
-                    }
-                ]
             };
 
             /* 
@@ -122,12 +102,32 @@ watchMsgs = function () {
 
         }
 
-        // console.log(dados);
-
-
+        
+        
         // dArr[index].querySelector('.message-out').textContent; // mensagem ok
-
+        
     }
+    
+    // json infos fixas
+    const dados     = {
+        "app": "privatepartners",
+        "chat_id": "000001-ONE",
+        "chat_group": "chat-private",
+        "messages": JSON.stringify(dadosMsg)
+    };
+
+    console.log(dados);
+
+    fetch(endpoint,
+        {
+            method: "POST",
+            body: dados
+        })
+        .then(function (res) { 
+            // return res.json();
+            console.log(res); 
+        })
+        .catch(() => console.log('erro' + res)) 
 
     // },10000);
 
