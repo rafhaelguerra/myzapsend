@@ -8,6 +8,7 @@ watchMsgs = function () {
     const endpoint  = "https://one-webhook-chat-hj57u.ondigitalocean.app/api/v1/one/web-whatsapp/webhook";
     const messages  = [];
     const dados     = [];
+    const dadosMsg  = [];
 
     typeof messages;
 
@@ -17,7 +18,15 @@ watchMsgs = function () {
 
 
     for (let index = 0; index < dArr.length; index++) {
-        let typeMessage = '';
+        
+        let typeMessage         = "";
+        let mensagem            = "";
+        let checkTypeMessage    = "";
+        let timeMEssage         = "";
+        checkTypeMessage = dArr[index].querySelector('div');
+
+        // detectdando files
+        //console.log(dArr[index]);
 
         // verifica se eh aviso de conta empresarial
         if (dArr[index].querySelector('._amki') || dArr[index].querySelector('._amkg')) {
@@ -25,27 +34,49 @@ watchMsgs = function () {
             continue;
         } else {
 
-            let checkTypeMessage = dArr[index].querySelector('div');
-            let timeMEssage = dArr[index].querySelector('.copyable-text').getAttribute('data-pre-plain-text').split('[')[1].split(']')[0];
-            let idMensagem = dArr[index].getAttribute('data-id');
-            let idTelefoneDestinatario = dArr[index].getAttribute('data-id').split('_')[1].split('@')[0];
-            let mensagem = ""; // mensagem ok
+            if(dArr[index].querySelector('img')) {
+                let imgFile     = dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x14tgpju').getAttribute('src');
+                let imgMime     = imgFile.split(':')[1].split('/')[1].split(';')[0]; // todos são .jpg...
+                console.log('mime file = ', imgMime);
+                console.log('é file', imgFile); //dArr[index].querySelector('.x1rg5ohu.x16dsc37')
 
-            //verifica se remetende ou destinatario
-            if (checkTypeMessage.classList.contains('message-out')) {
-                typeMessage = 'message-out'; // remetente
-            } else {
-                typeMessage = 'message-in'; // destinatario
+            } else if(dArr[index].querySelector('div[role=button]')){
+                console.log('eh arquivo de baixar');
+                
+/*                 console.log(dArr[index]);
+                let nameZip = dArr[index].querySelector('div[role=button]').querySelector('.x13faqbe._ao3e').textContent;
+                console.log('nome do zip', nameZip);
+                console.log('tamanho do zip =  ', dArr[index].querySelector('.x1rg5ohu.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft.xwcf1sq').textContent); */
+                continue;
+            }else {
+
+                //verifica se remetende ou destinatario
+                if (checkTypeMessage.classList.contains('message-out')) {
+                    typeMessage = 'message-out'; // remetente
+                } else {
+                    typeMessage = 'message-in'; // destinatario
+                }
+
+                timeMEssage = dArr[index].querySelector('.copyable-text').getAttribute('data-pre-plain-text').split('[')[1].split(']')[0];   
+                mensagem = dArr[index].querySelector("." + typeMessage).querySelector("span[dir]").querySelector("span").textContent 
+
             }
 
-            mensagem = dArr[index].querySelector("." + typeMessage).querySelector("span[dir]").querySelector("span").textContent
+            //let timeMEssage = dArr[index].querySelector('.copyable-text').getAttribute('data-pre-plain-text').split('[')[1].split(']')[0];
+            let idMensagem = dArr[index].getAttribute('data-id');
+            let idTelefoneDestinatario = dArr[index].getAttribute('data-id').split('_')[1].split('@')[0];
+            
 
-            console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
+           
+
+            
+
+            /* console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
             console.log('data mensagem = ', timeMEssage);
             console.log('mensagem = ', mensagem);
             console.log('id mensagem = ', idMensagem);
             console.log('Tel destinatário = ', idTelefoneDestinatario);
-            console.log('___________________________________________________');
+            console.log('___________________________________________________'); */
 
             /* dados[index] = {
                 "tipoMensagem"  : typeMessage == 'message-out' ? 'remetente' : 'destinatário', 
@@ -91,7 +122,7 @@ watchMsgs = function () {
 
         }
 
-        console.log(dados);
+        // console.log(dados);
 
 
         // dArr[index].querySelector('.message-out').textContent; // mensagem ok
