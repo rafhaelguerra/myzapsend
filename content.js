@@ -56,7 +56,9 @@ watchMsgs = function () {
                 }
 
                 timeMEssage = dArr[index].querySelector('.copyable-text').getAttribute('data-pre-plain-text').split('[')[1].split(']')[0];   
-                mensagem = dArr[index].querySelector("." + typeMessage).querySelector("span[dir]").querySelector("span").textContent 
+                dArr[index].querySelector("." + typeMessage).querySelector("span[dir]").querySelectorAll("span").forEach(element => {
+                    mensagem +=  element.textContent;
+                }); 
 
             }
 
@@ -70,6 +72,8 @@ watchMsgs = function () {
             console.log('id mensagem = ', idMensagem);
             console.log('Tel destinatário = ', idTelefoneDestinatario);
             console.log('___________________________________________________'); */
+            console.log('mensagem = ', mensagem);
+            console.log('___________________________________________________');
 
 
             dadosMsg[index] = {
