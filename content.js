@@ -54,15 +54,16 @@ watchMsgs = function () {
                         textInfosVideo.push(el.textContent)
                     });
 
-                    console.log(textInfosVideo);
+                    // console.log(textInfosVideo);
 
                     objVideo = {
                         bgVideo :  _parent.querySelector('.x10l6tqk.x1hhq9f1.xo29wiw.x1vjfegm.x1okw0bk.xh8yej3.x5yr21d.x121ad3m.xop5d2z.x1qp9xe7.x1hilzlb.xztyhrg.x18d0r48.x14tgpju').getAttribute('style'),
+                        bgVideo2 :  _parent.querySelector('.x10l6tqk.x1hhq9f1.xo29wiw.x1vjfegm.x1okw0bk.xh8yej3.x5yr21d.x121ad3m.xop5d2z.x1qp9xe7.x1hilzlb.xztyhrg.x18d0r48.x127lhb5.x4afe7t.xa3vuyk.x10e4vud').getAttribute('style'),
                         timeVideo :  textInfosVideo[1],
                     }
                 }
 
-                console.log(objVideo);
+                // console.log(objVideo);
                 
                 /*                 
                 console.log(dArr[index]);
@@ -102,6 +103,7 @@ watchMsgs = function () {
                 "message_id": idMensagem,
                 "message": mensagem,
                 "file": imgFile ? imgFile : null,
+                "video": objVideo ? objVideo : null,
                 "date": timeMEssage,
                 "direction": typeMessage == "message-out" ? 'OUTGOING' : 'INTGOING',
                 "name_to": "???",
@@ -122,8 +124,8 @@ watchMsgs = function () {
         "messages": JSON.stringify(dadosMsg)
     };
 
-    /*
     console.log(JSON.stringify(dados));
+    /*
 
     fetch(endpoint,
         {
