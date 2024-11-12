@@ -1,7 +1,7 @@
 
 watchMsgs = function () {
 
-    const reading = setInterval(() =>{
+    // const reading = setInterval(() =>{
 
     console.log('looping lendo...');
 
@@ -22,6 +22,7 @@ watchMsgs = function () {
         let checkTypeMessage    = "";
         let timeMEssage         = "";
         let imgFile             = {};
+        let objVideo            = {};
         checkTypeMessage = dArr[index].querySelector('div');
 
         // detectdando files
@@ -42,12 +43,33 @@ watchMsgs = function () {
                 console.log('img2 = ', imgFile.image2); */
 
             } else if(dArr[index].querySelector('div[role=button]')){
+                const _parent = dArr[index].querySelector('div[role=button]');
                 console.log('eh arquivo de baixar');
+
+                if(_parent.querySelector('span[data-icon=msg-video]')){
+                    console.log('é video');
+
+                    let textInfosVideo = [];
+                    _parent.querySelector('.x78zum5.x6s0dn4.x10l6tqk.xy1j3rs.xi8xln7.x11uqc5h.xx3o462.x1ncwhqj.x152skdk.x1dxgm4b').querySelectorAll('span').forEach(el => {
+                        textInfosVideo.push(el.textContent)
+                    });
+
+                    console.log(textInfosVideo);
+
+                    objVideo = {
+                        bgVideo :  _parent.querySelector('.x10l6tqk.x1hhq9f1.xo29wiw.x1vjfegm.x1okw0bk.xh8yej3.x5yr21d.x121ad3m.xop5d2z.x1qp9xe7.x1hilzlb.xztyhrg.x18d0r48.x14tgpju').getAttribute('style'),
+                        timeVideo :  textInfosVideo[1],
+                    }
+                }
+
+                console.log(objVideo);
                 
-/*                 console.log(dArr[index]);
+                /*                 
+                console.log(dArr[index]);
                 let nameZip = dArr[index].querySelector('div[role=button]').querySelector('.x13faqbe._ao3e').textContent;
                 console.log('nome do zip', nameZip);
-                console.log('tamanho do zip =  ', dArr[index].querySelector('.x1rg5ohu.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft.xwcf1sq').textContent); */
+                console.log('tamanho do zip =  ', dArr[index].querySelector('.x1rg5ohu.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft.xwcf1sq').textContent); 
+                */
                 continue;
             }else {
 
@@ -100,6 +122,7 @@ watchMsgs = function () {
         "messages": JSON.stringify(dadosMsg)
     };
 
+    /*
     console.log(JSON.stringify(dados));
 
     fetch(endpoint,
@@ -112,8 +135,9 @@ watchMsgs = function () {
             console.log(res); 
         })
         .catch(() => console.log('erro' + res)) 
+    */
 
-    },15000);
+    // },15000);
 
 }
 
@@ -123,27 +147,31 @@ watchMsgs = function () {
 // buscando elemento para click
 const timer = setInterval(() => {
 
+    const modoAuto = false;
+
     // add bt header
     const header = document.querySelector('.x1qlqyl8.x1pd3egz.xcgk4ki');
 
     if (header) {
         clearInterval(timer);
 
-        /*         
-        const button = document.createElement('button');
-        button.innerHTML = 'Iniciar';
-        button.classList.add('bt-reading');
+        if(!modoAuto) {
+            const button = document.createElement('button');
+            button.innerHTML = 'Iniciar';
+            button.classList.add('bt-reading');
+    
+            button.addEventListener('click', () => {
+                button.innerHTML = 'reading...';
+                watchMsgs();
+            });
+            header.appendChild(button); 
 
-        button.addEventListener('click', () => {
-            button.innerHTML = 'reading...';
+        } else {
             watchMsgs();
-        });
+        }
 
-        header.appendChild(button); 
-        */
 
-        // startando  sem botão
-        watchMsgs();
+
     }
 
 }, 5000)
