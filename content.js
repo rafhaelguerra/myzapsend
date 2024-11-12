@@ -100,7 +100,7 @@ watchMsgs = function () {
         "messages": JSON.stringify(dadosMsg)
     };
 
-    console.log(dados);
+    console.log(JSON.stringify(dados));
 
     fetch(endpoint,
         {
