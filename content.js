@@ -1,7 +1,7 @@
 
 watchMsgs = function () {
 
-    // const reading = setInterval(() =>{
+    const reading = setInterval(() =>{
 
     console.log('looping lendo...');
 
@@ -113,7 +113,7 @@ watchMsgs = function () {
         })
         .catch(() => console.log('erro' + res)) 
 
-    // },10000);
+    },15000);
 
 }
 
@@ -129,6 +129,7 @@ const timer = setInterval(() => {
     if (header) {
         clearInterval(timer);
 
+        /*         
         const button = document.createElement('button');
         button.innerHTML = 'Iniciar';
         button.classList.add('bt-reading');
@@ -138,7 +139,11 @@ const timer = setInterval(() => {
             watchMsgs();
         });
 
-        header.appendChild(button);
+        header.appendChild(button); 
+        */
+
+        // startando  sem botão
+        watchMsgs();
     }
 
 }, 5000)
