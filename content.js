@@ -89,10 +89,6 @@ watchMsgs = function () {
             };
 
         }
-
-        
-        
-        // dArr[index].querySelector('.message-out').textContent; // mensagem ok
         
     }
     
