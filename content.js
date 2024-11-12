@@ -72,9 +72,6 @@ watchMsgs = function () {
             console.log('id mensagem = ', idMensagem);
             console.log('Tel destinatário = ', idTelefoneDestinatario);
             console.log('___________________________________________________'); */
-            console.log('mensagem = ', mensagem);
-            console.log('___________________________________________________');
-
 
             dadosMsg[index] = {
                 "message_id": idMensagem,
@@ -87,22 +84,6 @@ watchMsgs = function () {
                 "name_from": typeMessage == 'message-out' ? 'Eu' : 'destinatário',
                 "phone_from": idTelefoneDestinatario,
             };
-
-            /* 
-            var data = new FormData();
-            data.append("json", JSON.stringify(dados));
-
-            fetch(endpoint,
-                {
-                    method: "POST",
-                    body: data
-                })
-                .then(function (res) { 
-                    // return res.json();
-                    console.log(res); 
-                })
-                .catch(() => console.log('erro' + res)) 
-            */
 
         }
 
@@ -125,7 +106,7 @@ watchMsgs = function () {
     fetch(endpoint,
         {
             method: "POST",
-            body: dados
+            body: JSON.stringify(dados)
         })
         .then(function (res) { 
             // return res.json();
