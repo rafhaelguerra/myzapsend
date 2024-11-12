@@ -21,6 +21,7 @@ watchMsgs = function () {
         let mensagem            = "";
         let checkTypeMessage    = "";
         let timeMEssage         = "";
+        let imgFile             = {};
         checkTypeMessage = dArr[index].querySelector('div');
 
         // detectdando files
@@ -33,10 +34,12 @@ watchMsgs = function () {
         } else {
 
             if(dArr[index].querySelector('img')) {
-                let imgFile     = dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x14tgpju').getAttribute('src');
-                let imgMime     = imgFile.split(':')[1].split('/')[1].split(';')[0]; // todos são .jpg...
-                console.log('mime file = ', imgMime);
-                console.log('é file', imgFile); //dArr[index].querySelector('.x1rg5ohu.x16dsc37')
+                imgFile = {
+                    'image'     : dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x14tgpju').getAttribute('src'),
+                    'image2'    : dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x127lhb5.x4afe7t.xa3vuyk.x10e4vud').getAttribute('src')
+                }
+                /* console.log('img1 = ', imgFile.image);
+                console.log('img2 = ', imgFile.image2); */
 
             } else if(dArr[index].querySelector('div[role=button]')){
                 console.log('eh arquivo de baixar');
@@ -76,7 +79,7 @@ watchMsgs = function () {
             dadosMsg[index] = {
                 "message_id": idMensagem,
                 "message": mensagem,
-                "file": null,
+                "file": imgFile ? imgFile : null,
                 "date": timeMEssage,
                 "direction": typeMessage == "message-out" ? 'OUTGOING' : 'INTGOING',
                 "name_to": "???",
