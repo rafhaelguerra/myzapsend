@@ -54,7 +54,7 @@ watchMsgs = function () {
 
                 // VIDEO
                 if(_parent.querySelector('span[data-icon=msg-video]')){
-
+                    console.log('arquivo de  video');
                     let textInfosVideo = [];
                     _parent.querySelector('.x78zum5.x6s0dn4.x10l6tqk.xy1j3rs.xi8xln7.x11uqc5h.xx3o462.x1ncwhqj.x152skdk.x1dxgm4b').querySelectorAll('span').forEach(el => {
                         textInfosVideo.push(el.textContent)
@@ -78,6 +78,15 @@ watchMsgs = function () {
                 console.log('tamanho do zip =  ', dArr[index].querySelector('.x1rg5ohu.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft.xwcf1sq').textContent); 
                 */
                 continue;
+
+            // AUDIO
+            } else if(dArr[index].querySelector('button span[data-icon=audio-play]')){
+                console.log('é audio');
+                /* if(){
+                    // querySelector('._ak8w').textContent
+                } */
+
+
             }else {
 
                 //verifica se remetende ou destinatario
