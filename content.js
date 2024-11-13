@@ -26,7 +26,7 @@ watchMsgs = function () {
         checkTypeMessage = dArr[index].querySelector('div');
 
         // detectdando files
-        //console.log(dArr[index]);
+        console.log(dArr[index]);
 
         // verifica se eh aviso de conta empresarial
         if (dArr[index].querySelector('._amki') || dArr[index].querySelector('._amkg')) {
@@ -34,20 +34,26 @@ watchMsgs = function () {
             continue;
         } else {
 
+            // IMAGEM
             if(dArr[index].querySelector('img')) {
+
+                let imagesArr = [];
+                dArr[index].querySelectorAll('img').forEach(element => {
+                    imagesArr.push(element.getAttribute('src'));
+                }); 
+
                 imgFile = {
-                    'image'     : dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x14tgpju').getAttribute('src'),
-                    'image2'    : dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x127lhb5.x4afe7t.xa3vuyk.x10e4vud').getAttribute('src')
+                    'image'     : imagesArr,
+                    // 'image2'    : dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x127lhb5.x4afe7t.xa3vuyk.x10e4vud').getAttribute('src')
                 }
-                /* console.log('img1 = ', imgFile.image);
-                console.log('img2 = ', imgFile.image2); */
+                console.log('img = ', imgFile.image);
 
             } else if(dArr[index].querySelector('div[role=button]')){
                 const _parent = dArr[index].querySelector('div[role=button]');
                 console.log('eh arquivo de baixar');
 
+                // VIDEO
                 if(_parent.querySelector('span[data-icon=msg-video]')){
-                    console.log('é video');
 
                     let textInfosVideo = [];
                     _parent.querySelector('.x78zum5.x6s0dn4.x10l6tqk.xy1j3rs.xi8xln7.x11uqc5h.xx3o462.x1ncwhqj.x152skdk.x1dxgm4b').querySelectorAll('span').forEach(el => {
