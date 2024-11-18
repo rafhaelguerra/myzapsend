@@ -1,7 +1,7 @@
 
 watchMsgs = function () {
 
-    const reading = setInterval(() =>{
+    // const reading = setInterval(() =>{
 
     console.log('looping lendo...');
 
@@ -22,10 +22,11 @@ watchMsgs = function () {
         let checkTypeMessage    = "";
         let timeMEssage         = "";
         let imgFile             = {};
+        let objVideo            = {};
         checkTypeMessage = dArr[index].querySelector('div');
 
         // detectdando files
-        //console.log(dArr[index]);
+        console.log(dArr[index]);
 
         // verifica se eh aviso de conta empresarial
         if (dArr[index].querySelector('._amki') || dArr[index].querySelector('._amkg')) {
@@ -33,16 +34,42 @@ watchMsgs = function () {
             continue;
         } else {
 
+            // IMAGEM
             if(dArr[index].querySelector('img')) {
+
+                let imagesArr = [];
+                dArr[index].querySelectorAll('img').forEach(element => {
+                    imagesArr.push(element.getAttribute('src'));
+                }); 
+
                 imgFile = {
-                    'image'     : dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x14tgpju').getAttribute('src'),
-                    'image2'    : dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x127lhb5.x4afe7t.xa3vuyk.x10e4vud').getAttribute('src')
+                    'image'     : imagesArr,
+                    // 'image2'    : dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x127lhb5.x4afe7t.xa3vuyk.x10e4vud').getAttribute('src')
                 }
-                /* console.log('img1 = ', imgFile.image);
-                console.log('img2 = ', imgFile.image2); */
+                console.log('img = ', imgFile.image);
 
             } else if(dArr[index].querySelector('div[role=button]')){
+                const _parent = dArr[index].querySelector('div[role=button]');
                 console.log('eh arquivo de baixar');
+
+                // VIDEO
+                if(_parent.querySelector('span[data-icon=msg-video]')){
+                    console.log('arquivo de  video');
+                    let textInfosVideo = [];
+                    _parent.querySelector('.x78zum5.x6s0dn4.x10l6tqk.xy1j3rs.xi8xln7.x11uqc5h.xx3o462.x1ncwhqj.x152skdk.x1dxgm4b').querySelectorAll('span').forEach(el => {
+                        textInfosVideo.push(el.textContent)
+                    });
+
+                    // console.log(textInfosVideo);
+
+                    objVideo = {
+                        bgVideo :  _parent.querySelector('.x10l6tqk.x1hhq9f1.xo29wiw.x1vjfegm.x1okw0bk.xh8yej3.x5yr21d.x121ad3m.xop5d2z.x1qp9xe7.x1hilzlb.xztyhrg.x18d0r48.x14tgpju').getAttribute('style'),
+                        bgVideo2 :  _parent.querySelector('.x10l6tqk.x1hhq9f1.xo29wiw.x1vjfegm.x1okw0bk.xh8yej3.x5yr21d.x121ad3m.xop5d2z.x1qp9xe7.x1hilzlb.xztyhrg.x18d0r48.x127lhb5.x4afe7t.xa3vuyk.x10e4vud').getAttribute('style'),
+                        timeVideo :  textInfosVideo[1],
+                    }
+                }
+
+                // console.log(objVideo);
                 
                 /*                 
                 console.log(dArr[index]);
@@ -51,6 +78,15 @@ watchMsgs = function () {
                 console.log('tamanho do zip =  ', dArr[index].querySelector('.x1rg5ohu.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft.xwcf1sq').textContent); 
                 */
                 continue;
+
+            // AUDIO
+            } else if(dArr[index].querySelector('button span[data-icon=audio-play]')){
+                console.log('é audio');
+                /* if(){
+                    // querySelector('._ak8w').textContent
+                } */
+
+
             }else {
 
                 //verifica se remetende ou destinatario
@@ -71,17 +107,18 @@ watchMsgs = function () {
             let idMensagem = dArr[index].getAttribute('data-id');
             let idTelefoneDestinatario = dArr[index].getAttribute('data-id').split('_')[1].split('@')[0];
 
-            console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
+            /* console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
             console.log('data mensagem = ', timeMEssage);
             console.log('mensagem = ', mensagem);
             console.log('id mensagem = ', idMensagem);
             console.log('Tel destinatário = ', idTelefoneDestinatario);
-            console.log('___________________________________________________');
+            console.log('___________________________________________________'); */
 
             dadosMsg[index] = {
                 "message_id": idMensagem,
                 "message": mensagem,
                 "file": imgFile ? imgFile : null,
+                "video": objVideo ? objVideo : null,
                 "date": timeMEssage,
                 "direction": typeMessage == "message-out" ? 'OUTGOING' : 'INTGOING',
                 "name_to": "???",
@@ -103,6 +140,7 @@ watchMsgs = function () {
     };
 
     console.log(JSON.stringify(dados));
+    /*
 
     fetch(endpoint,
         {
@@ -114,8 +152,9 @@ watchMsgs = function () {
             console.log(res); 
         })
         .catch(() => console.log('erro' + res)) 
+    */
 
-    },15000);
+    // },15000);
 
 }
 
@@ -125,27 +164,31 @@ watchMsgs = function () {
 // buscando elemento para click
 const timer = setInterval(() => {
 
+    const modoAuto = false;
+
     // add bt header
     const header = document.querySelector('.x1qlqyl8.x1pd3egz.xcgk4ki');
 
     if (header) {
         clearInterval(timer);
 
-        /*         
-        const button = document.createElement('button');
-        button.innerHTML = 'Iniciar';
-        button.classList.add('bt-reading');
+        if(!modoAuto) {
+            const button = document.createElement('button');
+            button.innerHTML = 'Iniciar';
+            button.classList.add('bt-reading');
+    
+            button.addEventListener('click', () => {
+                button.innerHTML = 'reading...';
+                watchMsgs();
+            });
+            header.appendChild(button); 
 
-        button.addEventListener('click', () => {
-            button.innerHTML = 'reading...';
+        } else {
             watchMsgs();
-        });
+        }
 
-        header.appendChild(button); 
-        */
 
-        // startando  sem botão
-        watchMsgs();
+
     }
 
 }, 5000)

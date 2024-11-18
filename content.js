@@ -1,7 +1,7 @@
 
 watchMsgs = function () {
 
-    // const reading = setInterval(() =>{
+    // const reading = setInterval(() => {
 
     console.log('looping lendo...');
 
@@ -107,12 +107,12 @@ watchMsgs = function () {
             let idMensagem = dArr[index].getAttribute('data-id');
             let idTelefoneDestinatario = dArr[index].getAttribute('data-id').split('_')[1].split('@')[0];
 
-            /* console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
+            console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
             console.log('data mensagem = ', timeMEssage);
             console.log('mensagem = ', mensagem);
             console.log('id mensagem = ', idMensagem);
             console.log('Tel destinatário = ', idTelefoneDestinatario);
-            console.log('___________________________________________________'); */
+            console.log('___________________________________________________');
 
             dadosMsg[index] = {
                 "message_id": idMensagem,
@@ -140,19 +140,22 @@ watchMsgs = function () {
     };
 
     console.log(JSON.stringify(dados));
-    /*
+    
 
-    fetch(endpoint,
+    /* fetch(endpoint,
         {
-            method: "POST",
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify(dados)
         })
         .then(function (res) { 
             // return res.json();
             console.log(res); 
         })
-        .catch(() => console.log('erro' + res)) 
-    */
+        .catch(() => console.log('erro' + res)) */ 
+    
 
     // },15000);
 
