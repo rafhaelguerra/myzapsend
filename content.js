@@ -116,7 +116,7 @@ watchMsgs = function () {
 
                     console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
                     console.log('data mensagem = ', timeMEssage);
-                    dd('mensagem = ' + mensagem, typeMessage == 'message-out' ? 'purple' : 'pink', 'black');
+                    dd('mensagem = ' + mensagem, typeMessage == 'message-out' ? 'purple' : 'pink', typeMessage == 'message-out' ? 'white' : 'black');
                     console.log('id mensagem = ', idMensagem);
                     console.log('Tel destinatário = ', idTelefoneDestinatario);
                     console.log('___________________________________________________');
