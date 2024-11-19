@@ -1,9 +1,7 @@
 
 watchMsgs = function () {
 
-    const reading = setInterval(() => {
-
-        console.log('looping lendo...');
+    // const reading = setInterval(() => {
 
         const endpoint  = "https://one-webhook-chat-hj57u.ondigitalocean.app/api/v1/one/web-whatsapp/webhook";
         const dadosMsg  = [];
@@ -57,13 +55,13 @@ watchMsgs = function () {
                         }
                         console.log('img = ', imgFile.image);
 
-                    } else if(dArr[index].querySelector('div[role=button]')){
+                    } else if(dArr[index].querySelector('.icon-doc-generic')){
                         const _parent = dArr[index].querySelector('div[role=button]');
-                        console.log('eh arquivo de baixar');
+                        dd('DOWNLOAD', 'RED', 'white');
 
                         // VIDEO
                         if(_parent.querySelector('span[data-icon=msg-video]')){
-                            console.log('arquivo de  video');
+                            dd('VÍDEO', 'blue', 'white');
                             let textInfosVideo = [];
                             _parent.querySelector('.x78zum5.x6s0dn4.x10l6tqk.xy1j3rs.xi8xln7.x11uqc5h.xx3o462.x1ncwhqj.x152skdk.x1dxgm4b').querySelectorAll('span').forEach(el => {
                                 textInfosVideo.push(el.textContent)
@@ -90,7 +88,7 @@ watchMsgs = function () {
 
                     // AUDIO
                     } else if(dArr[index].querySelector('button span[data-icon=audio-play]')){
-                        console.log('é audio');
+                        dd('ÁUDIO', 'blue', 'white');
                         /* if(){
                             // querySelector('._ak8w').textContent
                         } */
@@ -116,12 +114,12 @@ watchMsgs = function () {
                     let idMensagem = dArr[index].getAttribute('data-id');
                     let idTelefoneDestinatario = dArr[index].getAttribute('data-id').split('_')[1].split('@')[0];
 
-                /*  console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
+                    console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
                     console.log('data mensagem = ', timeMEssage);
-                    console.log('mensagem = ', mensagem);
+                    dd('mensagem = ' + mensagem, typeMessage == 'message-out' ? 'purple' : 'pink', 'black');
                     console.log('id mensagem = ', idMensagem);
                     console.log('Tel destinatário = ', idTelefoneDestinatario);
-                    console.log('___________________________________________________'); */
+                    console.log('___________________________________________________');
 
                     dadosMsg[index] = {
                         "message_id": idMensagem,
@@ -197,7 +195,7 @@ watchMsgs = function () {
             console.log("==========================");
         }
 
-    },15000);
+    // },15000);
 
 }
 
@@ -236,3 +234,6 @@ const timer = setInterval(() => {
 
 }, 5000)
 
+const dd  = (str, bg='black',color='white') => {
+    console.log('%c '+str+' ','color:'+color+';background-color:'+bg+';');
+}
