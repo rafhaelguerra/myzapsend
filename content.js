@@ -1,7 +1,7 @@
 
 watchMsgs = function () {
 
-    // const reading = setInterval(() => {
+    const reading = setInterval(() => {
 
         console.log('looping lendo...');
 
@@ -145,56 +145,59 @@ watchMsgs = function () {
             
         }
 
-        console.log(dadosMsg);
-        
-        // json infos fixas
-        const dados     = {
-            "app": "privatepartners",
-            "chat_id": "000001-ONE",
-            "chat_group": "chat-private",
-            "messages": dadosMsg
-        };
+        // se houver mensagens continua para  gravar
+        if (!!Object.values(dadosMsg).length) { 
+            // json infos fixas
+            const dados     = {
+                "app": "privatepartners",
+                "chat_id": "000001-ONE",
+                "chat_group": "chat-private",
+                "messages": dadosMsg
+            };
 
-        // console.log(JSON.stringify(dados));
+            console.log(dados);
+            // console.log(JSON.stringify(dados));
 
-        /* if(localStorage.getItem(localSave) === lastMsg) {
-            console.log("já gravada");
-            return;
-        }  else { */
+            /* if(localStorage.getItem(localSave) === lastMsg) {
+                console.log("já gravada");
+                return;
+            }  else { */
 
-            // enviando para API
-            fetch(endpoint,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(dados)
-                })
-                .then(function (res) { 
-                    // return res.json();
-                    console.log(res);
-                    console.log("##############");
-                    console.log("mensagem nova armazenada!");            
-        
-                    // adiciona  uma class para marcar como lido
-                    for (var i = 0; i < msgs.length; ++i) {
-                        msgs[i].classList.add('read_ok');
-                     }
+                // enviando para API
+                fetch(endpoint,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(dados)
+                    })
+                    .then(function (res) { 
+                        // return res.json();
+                        // console.log(res);
+                        console.log("==========================");
+                        console.log("mensagem nova armazenada!");            
+                        console.log("==========================");
+            
+                        // adiciona  uma class para marcar como lido
+                        for (var i = 0; i < msgs.length; ++i) {
+                            msgs[i].classList.add('read_ok');
+                        }
 
-                    // armazena última mensagem enviada  para evitar envios repetidos
-                    // localStorage.setItem(localSave,lastMsg);
+                        // armazena última mensagem enviada  para evitar envios repetidos
+                        // localStorage.setItem(localSave,lastMsg);
+            
+                    })
+                    .catch((res) => console.log('erro' + res)) 
 
+            // }
+        } else  {
+            console.log("==========================");
+            console.log("nenhuma mensagem nova...");            
+            console.log("==========================");
+        }
 
-        
-                })
-                .catch((res) => console.log('erro' + res)) 
-
-        // }
-
-    
-
-    // },15000);
+    },15000);
 
 }
 
