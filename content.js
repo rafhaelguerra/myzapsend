@@ -11,7 +11,7 @@ watchMsgs = function () {
         // typeof messages;
 
         const msgs = document.querySelectorAll('._amjv._aotl')
-        console.log('|| - lendo chat... - ||')
+        dd('|| - lendo chat... - ||')
         const dArr = [...msgs];
 
 
@@ -26,12 +26,12 @@ watchMsgs = function () {
             checkTypeMessage = dArr[index].querySelector('div');
 
             // detectdando files
-            // console.log(dArr[index]);
+            // dd(dArr[index]);
 
 
             // verifica se eh aviso de conta empresarial
             if (dArr[index].querySelector('._amki') || dArr[index].querySelector('._amkg')) {
-                console.log('tem info inicial');
+                dd('tem info inicial');
                 continue;
             } else {
 
@@ -53,7 +53,7 @@ watchMsgs = function () {
                             'image'     : imagesArr,
                             // 'image2'    : dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x127lhb5.x4afe7t.xa3vuyk.x10e4vud').getAttribute('src')
                         }
-                        console.log('img = ', imgFile.image);
+                        dd('img = ' + imgFile.image);
 
                     } else if(dArr[index].querySelector('.icon-doc-generic')){
                         const _parent = dArr[index].querySelector('div[role=button]');
@@ -67,7 +67,7 @@ watchMsgs = function () {
                                 textInfosVideo.push(el.textContent)
                             });
 
-                            // console.log(textInfosVideo);
+                            // dd(textInfosVideo);
 
                             objVideo = {
                                 bgVideo :  _parent.querySelector('.x10l6tqk.x1hhq9f1.xo29wiw.x1vjfegm.x1okw0bk.xh8yej3.x5yr21d.x121ad3m.xop5d2z.x1qp9xe7.x1hilzlb.xztyhrg.x18d0r48.x14tgpju').getAttribute('style'),
@@ -76,13 +76,13 @@ watchMsgs = function () {
                             }
                         }
 
-                        // console.log(objVideo);
+                        // dd(objVideo);
                         
                         /*                 
-                        console.log(dArr[index]);
+                        dd(dArr[index]);
                         let nameZip = dArr[index].querySelector('div[role=button]').querySelector('.x13faqbe._ao3e').textContent;
-                        console.log('nome do zip', nameZip);
-                        console.log('tamanho do zip =  ', dArr[index].querySelector('.x1rg5ohu.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft.xwcf1sq').textContent); 
+                        dd('nome do zip', nameZip);
+                        dd('tamanho do zip =  ', dArr[index].querySelector('.x1rg5ohu.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft.xwcf1sq').textContent); 
                         */
                         continue;
 
@@ -114,12 +114,12 @@ watchMsgs = function () {
                     let idMensagem = dArr[index].getAttribute('data-id');
                     let idTelefoneDestinatario = dArr[index].getAttribute('data-id').split('_')[1].split('@')[0];
 
-                    console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
-                    console.log('data mensagem = ', timeMEssage);
+                    dd('tipo de envio = ' + typeMessage == 'message-out' ? 'remetente' : 'destinatário');
+                    dd('data mensagem = ' + timeMEssage);
                     dd('mensagem = ' + mensagem, typeMessage == 'message-out' ? 'purple' : 'pink', typeMessage == 'message-out' ? 'white' : 'black');
-                    console.log('id mensagem = ', idMensagem);
-                    console.log('Tel destinatário = ', idTelefoneDestinatario);
-                    console.log('___________________________________________________');
+                    dd('id mensagem = '  + idMensagem);
+                    dd('Tel destinatário = '  + idTelefoneDestinatario);
+                    dd('___________________________________________________');
 
                     dadosMsg[index] = {
                         "message_id": idMensagem,
@@ -137,7 +137,7 @@ watchMsgs = function () {
                     //cria "id" para checar última mensagem enviada
                     /* lastMsg = timeMEssage+'_'+mensagem;
                     lastMsg = lastMsg.replace(/\s/g, '');
-                    console.log(lastMsg);   */
+                    dd(lastMsg);   */
 
             }
             
@@ -153,11 +153,11 @@ watchMsgs = function () {
                 "messages": dadosMsg
             };
 
-            console.log(dados);
-            // console.log(JSON.stringify(dados));
+            dd(dados);
+            // dd(JSON.stringify(dados));
 
             /* if(localStorage.getItem(localSave) === lastMsg) {
-                console.log("já gravada");
+                dd("já gravada");
                 return;
             }  else { */
 
@@ -172,10 +172,10 @@ watchMsgs = function () {
                     })
                     .then(function (res) { 
                         // return res.json();
-                        // console.log(res);
-                        console.log("==========================");
-                        console.log("mensagem nova armazenada!");            
-                        console.log("==========================");
+                        // dd(res);
+                        dd("==========================");
+                        dd("mensagem nova armazenada!");            
+                        dd("==========================");
             
                         // adiciona  uma class para marcar como lido
                         for (var i = 0; i < msgs.length; ++i) {
@@ -186,13 +186,13 @@ watchMsgs = function () {
                         // localStorage.setItem(localSave,lastMsg);
             
                     })
-                    .catch((res) => console.log('erro' + res)) 
+                    .catch((res) => dd('erro' + res)) 
 
             // }
         } else  {
-            console.log("==========================");
-            console.log("nenhuma mensagem nova...");            
-            console.log("==========================");
+            dd("==========================");
+            dd("nenhuma mensagem nova...");            
+            dd("==========================");
         }
 
     // },15000);
@@ -234,6 +234,6 @@ const timer = setInterval(() => {
 
 }, 5000)
 
-const dd  = (str, bg='black',color='white') => {
+const dd  = (str, bg='transparent',color='white') => {
     console.log('%c '+str+' ','color:'+color+';background-color:'+bg+';');
 }
