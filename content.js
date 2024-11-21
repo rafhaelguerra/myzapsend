@@ -1,11 +1,17 @@
 
 watchMsgs = function () {
 
+    // config
+    const config_Aapp        = "privatepartners";
+    const config_Channel     = "OneRafhael";
+    const config_Chat_id     = "000001-ONE";
+    const config_Chat_group  = "chat-private";
+
+
     // const reading = setInterval(() => {
 
         const endpoint  = "https://one-webhook-chat-hj57u.ondigitalocean.app/api/v1/one/web-whatsapp/webhook";
         const dadosMsg  = [];
-        var lastMsg     = '';
         const localSave =  "ls_lastMSG";
 
         // typeof messages;
@@ -55,26 +61,22 @@ watchMsgs = function () {
                         }
                         dd('img = ' + imgFile.image);
 
+                    // VIDEO
+                    } else if(dArr[index].querySelector('.x10l6tqk.x1hhq9f1.xo29wiw.x1vjfegm.x1okw0bk.xh8yej3.x5yr21d.x121ad3m.xop5d2z.x1qp9xe7.x1hilzlb.xztyhrg.x18d0r48.x127lhb5.x4afe7t.xa3vuyk.x10e4vud')){
+                        dd('VÍDEO', 'blue', 'white');
+
+                        objVideo = {
+                            bgVideo     :  dArr[index].querySelector('.x10l6tqk.x1hhq9f1.xo29wiw.x1vjfegm.x1okw0bk.xh8yej3.x5yr21d.x121ad3m.xop5d2z.x1qp9xe7.x1hilzlb.xztyhrg.x18d0r48.x127lhb5.x4afe7t.xa3vuyk.x10e4vud').getAttribute('style'),
+                            timeVideo   :  dArr[index].querySelector('.xx3o462.xuxw1ft.x78zum5.x6s0dn4.x1dxgm4b.x12lo8hy.x152skdk').textContent,
+                        }
+
+                        dd('video = ' + objVideo.bgVideo);
+                        dd('tempo video = ' + objVideo.timeVideo);
+
                     } else if(dArr[index].querySelector('.icon-doc-generic')){
-                        const _parent = dArr[index].querySelector('div[role=button]');
                         dd('DOWNLOAD', 'RED', 'white');
 
-                        // VIDEO
-                        if(_parent.querySelector('span[data-icon=msg-video]')){
-                            dd('VÍDEO', 'blue', 'white');
-                            let textInfosVideo = [];
-                            _parent.querySelector('.x78zum5.x6s0dn4.x10l6tqk.xy1j3rs.xi8xln7.x11uqc5h.xx3o462.x1ncwhqj.x152skdk.x1dxgm4b').querySelectorAll('span').forEach(el => {
-                                textInfosVideo.push(el.textContent)
-                            });
-
-                            // dd(textInfosVideo);
-
-                            objVideo = {
-                                bgVideo :  _parent.querySelector('.x10l6tqk.x1hhq9f1.xo29wiw.x1vjfegm.x1okw0bk.xh8yej3.x5yr21d.x121ad3m.xop5d2z.x1qp9xe7.x1hilzlb.xztyhrg.x18d0r48.x14tgpju').getAttribute('style'),
-                                bgVideo2 :  _parent.querySelector('.x10l6tqk.x1hhq9f1.xo29wiw.x1vjfegm.x1okw0bk.xh8yej3.x5yr21d.x121ad3m.xop5d2z.x1qp9xe7.x1hilzlb.xztyhrg.x18d0r48.x127lhb5.x4afe7t.xa3vuyk.x10e4vud').getAttribute('style'),
-                                timeVideo :  textInfosVideo[1],
-                            }
-                        }
+                        
 
                         // dd(objVideo);
                         
@@ -134,10 +136,6 @@ watchMsgs = function () {
                         "phone_from": idTelefoneDestinatario,
                     };
                 }
-                    //cria "id" para checar última mensagem enviada
-                    /* lastMsg = timeMEssage+'_'+mensagem;
-                    lastMsg = lastMsg.replace(/\s/g, '');
-                    dd(lastMsg);   */
 
             }
             
@@ -147,19 +145,15 @@ watchMsgs = function () {
         if (!!Object.values(dadosMsg).length) { 
             // json infos fixas
             const dados     = {
-                "app": "privatepartners",
-                "chat_id": "000001-ONE",
-                "chat_group": "chat-private",
-                "messages": dadosMsg
+                "app"           : config_Aapp,
+                "channel"       : config_Channel,
+                "chat_id"       : config_Chat_id,
+                "chat_group"    : config_Chat_group,
+                "messages"      : dadosMsg
             };
 
             dd(dados);
             // dd(JSON.stringify(dados));
-
-            /* if(localStorage.getItem(localSave) === lastMsg) {
-                dd("já gravada");
-                return;
-            }  else { */
 
                 // enviando para API
                 fetch(endpoint,
@@ -181,14 +175,10 @@ watchMsgs = function () {
                         for (var i = 0; i < msgs.length; ++i) {
                             msgs[i].classList.add('read_ok');
                         }
-
-                        // armazena última mensagem enviada  para evitar envios repetidos
-                        // localStorage.setItem(localSave,lastMsg);
             
                     })
                     .catch((res) => dd('erro' + res)) 
 
-            // }
         } else  {
             dd("==========================");
             dd("nenhuma mensagem nova...");            
