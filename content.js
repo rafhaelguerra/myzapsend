@@ -9,17 +9,13 @@ watchMsgs = function () {
 
 
     // const reading = setInterval(() => {
+        dd('|| - lendo chat... - ||');
 
         const endpoint  = "https://one-webhook-chat-hj57u.ondigitalocean.app/api/v1/one/web-whatsapp/webhook";
         const dadosMsg  = [];
-        const localSave =  "ls_lastMSG";
-
-        // typeof messages;
 
         const msgs = document.querySelectorAll('._amjv._aotl')
-        dd('|| - lendo chat... - ||')
         const dArr = [...msgs];
-
 
         for (let index = 0; index < dArr.length; index++) {
             
@@ -31,16 +27,11 @@ watchMsgs = function () {
             let objVideo            = {};
             checkTypeMessage = dArr[index].querySelector('div');
 
-            // detectdando files
-            // dd(dArr[index]);
-
-
             // verifica se eh aviso de conta empresarial
             if (dArr[index].querySelector('._amki') || dArr[index].querySelector('._amkg')) {
                 dd('tem info inicial');
                 continue;
             } else {
-
 
                 // se tem a class declarada nem armazena
                 if ( dArr[index].classList.contains('read_ok') ) {
@@ -163,29 +154,9 @@ watchMsgs = function () {
             dd(dados);
             // dd(JSON.stringify(dados));
 
-                // enviando para API
-                fetch(endpoint,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(dados)
-                    })
-                    .then(function (res) { 
-                        // return res.json();
-                        // dd(res);
-                        dd("==========================");
-                        dd("mensagem nova armazenada!");            
-                        dd("==========================");
-            
-                        // adiciona  uma class para marcar como lido
-                        for (var i = 0; i < msgs.length; ++i) {
-                            msgs[i].classList.add('read_ok');
-                        }
-            
-                    })
-                    .catch((res) => dd('erro' + res)) 
+            // enviando para API
+            sendAPI(endpoint, dados);
+
 
         } else  {
             dd("==========================");
@@ -198,8 +169,35 @@ watchMsgs = function () {
 }
 
 
-//lista de conversas
 
+// envio para API
+async function sendAPI(endpoint,dados) {
+    const resultApi = await 
+    fetch(endpoint,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dados)
+        })
+        .then(function (res) { 
+            // return res.json();
+            // dd(res);
+            dd("==========================");
+            dd("mensagem nova armazenada!");            
+            dd("==========================");
+
+            // adiciona  uma class para marcar como lido
+            for (var i = 0; i < msgs.length; ++i) {
+                msgs[i].classList.add('read_ok');
+            }
+
+        })
+        .catch((res) => dd('erro' + res)) 
+}
+
+//lista de conversas
 // buscando elemento para click
 const timer = setInterval(() => {
 
