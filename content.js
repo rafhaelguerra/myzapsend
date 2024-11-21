@@ -105,7 +105,15 @@ watchMsgs = function () {
                             typeMessage = 'message-in'; // destinatario
                         }
 
-                        timeMEssage = dArr[index].querySelector('.copyable-text').getAttribute('data-pre-plain-text').split('[')[1].split(']')[0];   
+                        timeMEssage = dArr[index].querySelector('.copyable-text').getAttribute('data-pre-plain-text').split('[')[1].split(']')[0]; // 12:38, 19/11/2024
+                        timeMEssage = timeMEssage.replace(/\s/g, '');
+                        timeMEssage = timeMEssage.split(',');
+                        let strDate = timeMEssage[1].split('/');  
+                        strDate = `${strDate[2]}-${strDate[1]}-${strDate[0]}`;
+                        let strHour = timeMEssage[0]+":00";
+
+                        timeMEssage = strDate + " " +strHour;
+
                         dArr[index].querySelector("." + typeMessage).querySelector("span[dir]").querySelectorAll("span").forEach(element => {
                             mensagem +=  element.textContent;
                         }); 
