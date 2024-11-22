@@ -14,7 +14,7 @@ watchMsgs = function () {
         const endpoint  = "https://one-webhook-chat-hj57u.ondigitalocean.app/api/v1/one/web-whatsapp/webhook";
         const dadosMsg  = [];
 
-        const msgs = document.querySelectorAll('._amjv._aotl')
+        var msgs = document.querySelectorAll('._amjv._aotl');
         const dArr = [...msgs];
 
         for (let index = 0; index < dArr.length; index++) {
@@ -137,46 +137,69 @@ watchMsgs = function () {
                 }
 
             }
+
+            // se houver mensagens continua para  gravar
+            if (!!Object.values(dadosMsg[index]).length) { 
+                // json infos fixas
+                const dados     = {
+                    "app"           : config_Aapp,
+                    "channel"       : config_Channel,
+                    "chat_id"       : config_Chat_id,
+                    "chat_group"    : config_Chat_group,
+                    "messages"      : dadosMsg[index]
+                };
+
+                console.log(dados);
+                // dd(JSON.stringify(dados));
+
+                // enviando para API
+                fetch(endpoint,
+                    {
+                        method: 'POST',
+                        headers: {
+                            "Access-Control-Allow-Origin": "*",
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(dados)
+                    })
+                    .then(function (res) { 
+                        // return res.json();
+                        // dd(res);
+                        console.log("==========================");
+                        console.log("mensagem nova armazenada!");            
+                        console.log("==========================");
             
-        }
-
-        // se houver mensagens continua para  gravar
-        if (!!Object.values(dadosMsg).length) { 
-            // json infos fixas
-            const dados     = {
-                "app"           : config_Aapp,
-                "channel"       : config_Channel,
-                "chat_id"       : config_Chat_id,
-                "chat_group"    : config_Chat_group,
-                "messages"      : dadosMsg
-            };
-
-            dd(dados);
-            // dd(JSON.stringify(dados));
-
-            // enviando para API
-            sendAPI(endpoint, dados);
+                        // adiciona  uma class para marcar como lido
+                        for (var i = 0; i < msgs.length; ++i) {
+                            msgs[i].classList.add('read_ok');
+                        }
+            
+                    })
+                    .catch((res) => dd('erro' + res)) 
 
 
-        } else  {
-            dd("==========================");
-            dd("nenhuma mensagem nova...");            
-            dd("==========================");
-        }
+            } else  {
+                dd("==========================");
+                dd("nenhuma mensagem nova...");            
+                dd("==========================");
+            }
+            
+        }        
 
-    // },15000);
+    // },1000);
 
 }
 
 
 
 // envio para API
-async function sendAPI(endpoint,dados) {
+/* async function sendAPI(endpoint,dados) {
     const resultApi = await 
     fetch(endpoint,
         {
             method: 'POST',
             headers: {
+                "Access-Control-Allow-Origin": "*",
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(dados)
@@ -184,9 +207,9 @@ async function sendAPI(endpoint,dados) {
         .then(function (res) { 
             // return res.json();
             // dd(res);
-            dd("==========================");
-            dd("mensagem nova armazenada!");            
-            dd("==========================");
+            console.log("==========================");
+            console.log("mensagem nova armazenada!");            
+            console.log("==========================");
 
             // adiciona  uma class para marcar como lido
             for (var i = 0; i < msgs.length; ++i) {
@@ -195,7 +218,7 @@ async function sendAPI(endpoint,dados) {
 
         })
         .catch((res) => dd('erro' + res)) 
-}
+} */
 
 //lista de conversas
 // buscando elemento para click
