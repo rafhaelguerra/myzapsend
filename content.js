@@ -144,7 +144,7 @@ watchMsgs = function () {
                 const dados     = {
                     "app"           : config_Aapp,
                     "channel"       : config_Channel,
-                    "chat_id"       : config_Chat_id,
+                    "chat_id"       : dadosMsg[index].message_id.split('_')[1].split('@')[0]+"-"+config_Aapp,
                     "chat_group"    : config_Chat_group,
                     "messages"      : dadosMsg[index]
                 };
