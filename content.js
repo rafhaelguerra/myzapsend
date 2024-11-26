@@ -74,13 +74,26 @@ watchMsgs = function () {
                         if(dArr[index].querySelector('img').classList.contains('x1n2onr6')) {
                             dd('IMAGEM  AVATAR', 'orange', 'white');
 
-                            dArr[index].querySelector("." + typeMessage).querySelector("span[dir].copyable-text").querySelectorAll("span").forEach(element => {
-                                mensagem +=  element.textContent;
-                            });
-                            
-                            console.log(dArr[index]);
-                            console.log(dArr[index].querySelector("." + typeMessage));
-                            console.log(mensagem);
+                            // verifica se tem texto, senao pode ser áudio ou outra extensão
+                            if(dArr[index].querySelector("." + typeMessage).querySelector("span[dir].copyable-text")){
+                                dArr[index].querySelector("." + typeMessage).querySelector("span[dir].copyable-text").querySelectorAll("span").forEach(element => {
+                                    mensagem +=  element.textContent;
+                                });
+                                
+                                console.log(dArr[index]);
+                                console.log(dArr[index].querySelector("." + typeMessage));
+                                console.log(mensagem);
+                            } else if(dArr[index].querySelector('button span[data-icon=audio-play]')){
+                                console.log('ÁUDIO EM MENSAGEM INDIVIDUAL', 'blue', 'white');
+                                /* if(){
+                                    // querySelector('._ak8w').textContent
+                                } */
+        
+        
+                            } else {
+                                console.log('não sei o q é');
+                                continue;
+                            }
 
                             // debugger;
                         }
