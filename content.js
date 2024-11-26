@@ -9,27 +9,25 @@ watchMsgs = function () {
     // const config_Chat_id     = "000001-ONE"; //dinamico
     const config_Chat_group  = "chat-private";
 
-
-    // const reading = setInterval(() => {
         console.log('|| - lendo chat... - ||');
 
         const endpoint  = "https://one-webhook-chat-hj57u.ondigitalocean.app/api/v1/one/web-whatsapp/webhook";
         const dadosMsg  = [];
 
-        var msgs = document.querySelectorAll('._amjv._aotl');
-        var nameTo = document.querySelectorAll('#main header .x1iyjqo2');
-        var nameTo = nameTo[0].innerHTML;
-        const dArr = [...msgs];
-
+        var msgs        = document.querySelectorAll('._amjv._aotl');
+        var nameTo      = document.querySelectorAll('#main header .x1iyjqo2');
+        var nameTo      = nameTo[0].innerHTML;
+        const dArr      = [...msgs];
+        
         for (let index = 0; index < dArr.length; index++) {
             
-            let typeMessage         = "";
             let mensagem            = "";
+            let typeMessage         = "";
             let checkTypeMessage    = "";
             let timeMEssage         = "";
             let imgFile             = {};
             let objVideo            = {};
-            checkTypeMessage = dArr[index].querySelector('div');
+            checkTypeMessage        = dArr[index].querySelector('div');
 
             // verifica se eh aviso de conta empresarial
             if ( dArr[index].querySelector('._amki') 
@@ -76,13 +74,10 @@ watchMsgs = function () {
 
                             // verifica se tem texto, senao pode ser áudio ou outra extensão
                             if(dArr[index].querySelector("." + typeMessage).querySelector("span[dir].copyable-text")){
-                                dArr[index].querySelector("." + typeMessage).querySelector("span[dir].copyable-text").querySelectorAll("span").forEach(element => {
-                                    mensagem +=  element.textContent;
-                                });
-                                
-                                console.log(dArr[index]);
-                                console.log(dArr[index].querySelector("." + typeMessage));
-                                console.log(mensagem);
+
+                                mensagem = getText(dArr[index], typeMessage);
+                                console.log('mensagem com avatar ',dArr[index].querySelector("." + typeMessage));
+
                             } else if(dArr[index].querySelector('button span[data-icon=audio-play]')){
                                 console.log('ÁUDIO EM MENSAGEM INDIVIDUAL', 'blue', 'white');
                                 /* if(){
@@ -95,13 +90,8 @@ watchMsgs = function () {
                                 continue;
                             }
 
-                            // debugger;
                         }
-                        
-                        // AVATAR MEMBRO GRUPO
-                        /* } else if( dArr[index].querySelector('img').matches('.x1n2onr6.x1lliihq.xh8yej3.x5yr21d.x6ikm8r.x10wlt62.x14yjl9h.xudhj91.x18nykt9.xww2gxu.xl1xv1r.x115dhu7.x17vty23.x1hc1fzr._ao3e') )   {
-                            dd('é grupo','red','yellow');
-                            continue; */
+   
 
                     // VIDEO
                     } else if(dArr[index].querySelector('.x10l6tqk.x1hhq9f1.xo29wiw.x1vjfegm.x1okw0bk.xh8yej3.x5yr21d.x121ad3m.xop5d2z.x1qp9xe7.x1hilzlb.xztyhrg.x18d0r48.x127lhb5.x4afe7t.xa3vuyk.x10e4vud')){
@@ -234,11 +224,9 @@ watchMsgs = function () {
         }
                
         
-        setTimeout(() => {
+        /* setTimeout(() => {
             watchMsgs();
-        }, 10000);
-
-    // },8000);
+        }, 10000); */
 
 }
 
@@ -271,6 +259,17 @@ watchMsgs = function () {
         })
         .catch((res) => dd('erro' + res)) 
 } */
+
+// pega textos da  conversa
+const getText = (elArr, typeMsg) => {
+    let newMsg = "";
+    elArr.querySelector("." + typeMsg).querySelector("span[dir].copyable-text").querySelectorAll("span").forEach(element => {
+        newMsg +=  element.textContent;
+    });
+    console.log(newMsg);
+    // debugger;
+    return newMsg;
+}
 
 //lista de conversas
 // buscando elemento para click
