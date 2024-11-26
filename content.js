@@ -42,29 +42,53 @@ watchMsgs = function () {
                 continue;
             } else {
 
+                //verifica se remetende ou destinatario
+                if (checkTypeMessage.classList.contains('message-out')) {
+                    typeMessage = 'message-out'; // remetente
+                } else {
+                    typeMessage = 'message-in'; // destinatario
+                }
+
                 // se tem a class declarada nem armazena
                 if ( !dArr[index].classList.contains('read_ok') ) {
 
                     // IMAGEM
                     if(dArr[index].querySelector('img')) {
 
-                        dd('IMAGEM', 'orange', 'white');
+                        // imagem  de anexo
+                        if(dArr[index].querySelector('img').classList.contains('x15kfjtz')) {
+                            dd('IMAGEM  ANEXO', 'orange', 'white');
 
-                        let imagesArr = [];
-                        dArr[index].querySelectorAll('img').forEach(element => {
-                            imagesArr.push(element.getAttribute('src'));
-                        }); 
-
-                        imgFile = {
-                            'image'     : imagesArr,
-                            // 'image2'    : dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x127lhb5.x4afe7t.xa3vuyk.x10e4vud').getAttribute('src')
+                            let imagesArr = [];
+                            dArr[index].querySelectorAll('img').forEach(element => {
+                                imagesArr.push(element.getAttribute('src'));
+                            }); 
+    
+                            imgFile = {
+                                'image'     : imagesArr,
+                                // 'image2'    : dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x127lhb5.x4afe7t.xa3vuyk.x10e4vud').getAttribute('src')
+                            }
+                            console.log('img = ' + imgFile.image);
                         }
-                        console.log('img = ' + imgFile.image);
                         
-                    // AVATAR MEMBRO GRUPO
-                    /* } else if( dArr[index].querySelector('img').matches('.x1n2onr6.x1lliihq.xh8yej3.x5yr21d.x6ikm8r.x10wlt62.x14yjl9h.xudhj91.x18nykt9.xww2gxu.xl1xv1r.x115dhu7.x17vty23.x1hc1fzr._ao3e') )   {
-                        dd('é grupo','red','yellow');
-                        continue; */
+                        if(dArr[index].querySelector('img').classList.contains('x1n2onr6')) {
+                            dd('IMAGEM  AVATAR', 'orange', 'white');
+
+                            dArr[index].querySelector("." + typeMessage).querySelector("span[dir].copyable-text").querySelectorAll("span").forEach(element => {
+                                mensagem +=  element.textContent;
+                            });
+                            
+                            console.log(dArr[index]);
+                            console.log(dArr[index].querySelector("." + typeMessage));
+                            console.log(mensagem);
+
+                            // debugger;
+                        }
+                        
+                        // AVATAR MEMBRO GRUPO
+                        /* } else if( dArr[index].querySelector('img').matches('.x1n2onr6.x1lliihq.xh8yej3.x5yr21d.x6ikm8r.x10wlt62.x14yjl9h.xudhj91.x18nykt9.xww2gxu.xl1xv1r.x115dhu7.x17vty23.x1hc1fzr._ao3e') )   {
+                            dd('é grupo','red','yellow');
+                            continue; */
 
                     // VIDEO
                     } else if(dArr[index].querySelector('.x10l6tqk.x1hhq9f1.xo29wiw.x1vjfegm.x1okw0bk.xh8yej3.x5yr21d.x121ad3m.xop5d2z.x1qp9xe7.x1hilzlb.xztyhrg.x18d0r48.x127lhb5.x4afe7t.xa3vuyk.x10e4vud')){
@@ -103,12 +127,12 @@ watchMsgs = function () {
 
                     } else {
 
-                        //verifica se remetende ou destinatario
+                        /* //verifica se remetende ou destinatario
                         if (checkTypeMessage.classList.contains('message-out')) {
                             typeMessage = 'message-out'; // remetente
                         } else {
                             typeMessage = 'message-in'; // destinatario
-                        }
+                        } */
 
                         timeMEssage = dArr[index].querySelector('.copyable-text').getAttribute('data-pre-plain-text').split('[')[1].split(']')[0]; // 12:38, 19/11/2024
                         timeMEssage = timeMEssage.replace(/\s/g, '');
