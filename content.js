@@ -2,22 +2,22 @@
 watchMsgs = function () {
 
     // config
-    const config_Aapp        = "patiobrasil"; //preencher
-    const config_Channel     = "OneAna123"; //preencher
-    // const config_Aapp        = "privatepartners"; //preencher
-    // const config_Channel     = "OneRafhael"; //preencher
+    // const config_Aapp        = "patiobrasil"; //preencher
+    // const config_Channel     = "OneAna123"; //preencher
+    const config_Aapp        = "privatepartners"; //preencher
+    const config_Channel     = "OneRafhael"; //preencher
     // const config_Chat_id     = "000001-ONE"; //dinamico
     const config_Chat_group  = "chat-private";
 
 
-    const reading = setInterval(() => {
-        dd('|| - lendo chat... - ||');
+    // const reading = setInterval(() => {
+        console.log('|| - lendo chat... - ||');
 
         const endpoint  = "https://one-webhook-chat-hj57u.ondigitalocean.app/api/v1/one/web-whatsapp/webhook";
         const dadosMsg  = [];
 
         var msgs = document.querySelectorAll('._amjv._aotl');
-        var nameTo = document.querySelectorAll('#main header .x1c4vz4f .x1iyjqo2');
+        var nameTo = document.querySelectorAll('#main header .x1iyjqo2');
         var nameTo = nameTo[0].innerHTML;
         const dArr = [...msgs];
 
@@ -43,9 +43,7 @@ watchMsgs = function () {
             } else {
 
                 // se tem a class declarada nem armazena
-                if ( dArr[index].classList.contains('read_ok') ) {
-                    continue;
-                }else{
+                if ( !dArr[index].classList.contains('read_ok') ) {
 
                     // IMAGEM
                     if(dArr[index].querySelector('img')) {
@@ -81,7 +79,7 @@ watchMsgs = function () {
                         console.log('tempo video = ' + objVideo.timeVideo);
 
                     } else if(dArr[index].querySelector('.icon-doc-generic')){
-                        console.log('DOWNLOAD', 'RED', 'white');
+                        dd('DOWNLOAD', 'RED', 'white');
 
                         
 
@@ -103,7 +101,7 @@ watchMsgs = function () {
                         } */
 
 
-                    }else {
+                    } else {
 
                         //verifica se remetende ou destinatario
                         if (checkTypeMessage.classList.contains('message-out')) {
@@ -136,6 +134,7 @@ watchMsgs = function () {
                     dd('mensagem = ' + mensagem, typeMessage == 'message-out' ? 'purple' : 'pink', typeMessage == 'message-out' ? 'white' : 'black');
                     console.log('id mensagem = '  + idMensagem);
                     console.log('Tel destinatário = '  + idTelefoneDestinatario);
+                    console.log('name to = '  + nameTo);
                     console.log('___________________________________________________');
 
                     dadosMsg[index] = {
@@ -150,59 +149,59 @@ watchMsgs = function () {
                         "name_from": typeMessage == 'message-out' ? 'Eu' : 'destinatário',
                         "phone_from": 'phone_from',
                     };
+
+                    // json infos fixas
+                    const dados     = {
+                        "app"           : config_Aapp,
+                        "channel"       : config_Channel,
+                        "chat_id"       : dadosMsg[index].message_id.split('_')[1].split('@')[0]+"-"+config_Aapp,
+                        "chat_group"    : config_Chat_group,
+                        "messages"      : [dadosMsg[index]]
+                    };
+
+                    console.log(dados);
+                    // dd(JSON.stringify(dados));
+
+                    // enviando para API
+                    fetch(endpoint,
+                        {
+                            method: 'POST',
+                            headers: {
+                                "Access-Control-Allow-Origin": "*",
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(dados)
+                        })
+                        .then(function (res) { 
+                            // return res.json();
+                            // dd(res);
+                            console.log("==========================");
+                            console.log("mensagem nova armazenada!");            
+                            console.log("==========================");
+                
+                            // adiciona  uma class para marcar como lido
+                            for (var i = 0; i < msgs.length; ++i) {
+                                msgs[i].classList.add('read_ok');
+                            }
+                
+                        })
+                        .catch((res) => dd('erro' + res)) 
+
+                } else  {
+                    dd("==========================");
+                    dd("nenhuma mensagem nova...");            
+                    dd("==========================");
                 }
 
             }
+        }
+               
+        
+        setTimeout(() => {
+            watchMsgs();
+        }, 10000);
 
-            // se houver mensagens continua para  gravar
-            if (!!Object.values(dadosMsg[index]).length) { 
-                // json infos fixas
-                const dados     = {
-                    "app"           : config_Aapp,
-                    "channel"       : config_Channel,
-                    "chat_id"       : dadosMsg[index].message_id.split('_')[1].split('@')[0]+"-"+config_Aapp,
-                    "chat_group"    : config_Chat_group,
-                    "messages"      : [dadosMsg[index]]
-                };
-
-                console.log(dados);
-                // dd(JSON.stringify(dados));
-
-                // enviando para API
-                fetch(endpoint,
-                    {
-                        method: 'POST',
-                        headers: {
-                            "Access-Control-Allow-Origin": "*",
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(dados)
-                    })
-                    .then(function (res) { 
-                        // return res.json();
-                        // dd(res);
-                        console.log("==========================");
-                        console.log("mensagem nova armazenada!");            
-                        console.log("==========================");
-            
-                        // adiciona  uma class para marcar como lido
-                        for (var i = 0; i < msgs.length; ++i) {
-                            msgs[i].classList.add('read_ok');
-                        }
-            
-                    })
-                    .catch((res) => dd('erro' + res)) 
-
-
-            } else  {
-                dd("==========================");
-                dd("nenhuma mensagem nova...");            
-                dd("==========================");
-            }
-            
-        }        
-
-    },8000);
+    // },8000);
 
 }
 
