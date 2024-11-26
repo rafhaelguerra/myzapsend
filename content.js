@@ -63,8 +63,7 @@ watchMsgs = function () {
                             }); 
     
                             imgFile = {
-                                'image'     : imagesArr,
-                                // 'image2'    : dArr[index].querySelector('.x15kfjtz.x1c4vz4f.x2lah0s.xdl72j9.x127lhb5.x4afe7t.xa3vuyk.x10e4vud').getAttribute('src')
+                                'image'     : imagesArr
                             }
                             console.log('img = ' + imgFile.image);
                         }
@@ -130,13 +129,6 @@ watchMsgs = function () {
 
                     } else {
 
-                        /* //verifica se remetende ou destinatario
-                        if (checkTypeMessage.classList.contains('message-out')) {
-                            typeMessage = 'message-out'; // remetente
-                        } else {
-                            typeMessage = 'message-in'; // destinatario
-                        } */
-
                         timeMEssage = dArr[index].querySelector('.copyable-text').getAttribute('data-pre-plain-text').split('[')[1].split(']')[0]; // 12:38, 19/11/2024
                         timeMEssage = timeMEssage.replace(/\s/g, '');
                         timeMEssage = timeMEssage.split(',');
@@ -152,11 +144,10 @@ watchMsgs = function () {
 
                     }
 
-                    //let timeMEssage = dArr[index].querySelector('.copyable-text').getAttribute('data-pre-plain-text').split('[')[1].split(']')[0];
                     let idMensagem = dArr[index].getAttribute('data-id');
                     let idTelefoneDestinatario = dArr[index].getAttribute('data-id').split('_')[1].split('@')[0];
 
-                    console.log('tipo de envio = ' + typeMessage == 'message-out' ? 'remetente' : 'destinatário');
+                    console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
                     console.log('data mensagem = ' + timeMEssage);
                     dd('mensagem = ' + mensagem, typeMessage == 'message-out' ? 'purple' : 'pink', typeMessage == 'message-out' ? 'white' : 'black');
                     console.log('id mensagem = '  + idMensagem);
@@ -190,7 +181,7 @@ watchMsgs = function () {
                     // dd(JSON.stringify(dados));
 
                     // enviando para API
-                    fetch(endpoint,
+                    /* fetch(endpoint,
                         {
                             method: 'POST',
                             headers: {
@@ -212,7 +203,7 @@ watchMsgs = function () {
                             }
                 
                         })
-                        .catch((res) => dd('erro' + res)) 
+                        .catch((res) => dd('erro' + res))  */
 
                 } else  {
                     dd("==========================");
@@ -266,8 +257,6 @@ const getText = (elArr, typeMsg) => {
     elArr.querySelector("." + typeMsg).querySelector("span[dir].copyable-text").querySelectorAll("span").forEach(element => {
         newMsg +=  element.textContent;
     });
-    console.log(newMsg);
-    // debugger;
     return newMsg;
 }
 
