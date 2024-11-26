@@ -2,11 +2,11 @@
 watchMsgs = function () {
 
     // config
-    // const config_Aapp        = "patiobrasil"; //preencher
-    // const config_Channel     = "OneAna123"; //preencher
-    const config_Aapp        = "privatepartners"; //preencher
-    const config_Channel     = "OneRafhael"; //preencher
-    const config_Chat_id     = "000001-ONE"; //dinamico
+    const config_Aapp        = "patiobrasil"; //preencher
+    const config_Channel     = "OneAna123"; //preencher
+    // const config_Aapp        = "privatepartners"; //preencher
+    // const config_Channel     = "OneRafhael"; //preencher
+    // const config_Chat_id     = "000001-ONE"; //dinamico
     const config_Chat_group  = "chat-private";
 
 
@@ -17,6 +17,8 @@ watchMsgs = function () {
         const dadosMsg  = [];
 
         var msgs = document.querySelectorAll('._amjv._aotl');
+        var nameTo = document.querySelectorAll('#main header .x1c4vz4f .x1iyjqo2');
+        var nameTo = nameTo[0].innerHTML;
         const dArr = [...msgs];
 
         for (let index = 0; index < dArr.length; index++) {
@@ -143,10 +145,10 @@ watchMsgs = function () {
                         "video": objVideo ? objVideo : null,
                         "date": timeMEssage,
                         "direction": typeMessage == "message-out" ? 'OUTGOING' : 'INCOMING',
-                        "name_to": "???",
+                        "name_to": nameTo,
                         "phone_to": idTelefoneDestinatario,
                         "name_from": typeMessage == 'message-out' ? 'Eu' : 'destinatário',
-                        "phone_from": idTelefoneDestinatario,
+                        "phone_from": 'phone_from',
                     };
                 }
 
@@ -238,7 +240,7 @@ watchMsgs = function () {
 // buscando elemento para click
 const timer = setInterval(() => {
 
-    const modoAuto = true;
+    const modoAuto = false;
 
     // add bt header
     const header = document.querySelector('.x1qlqyl8.x1pd3egz.xcgk4ki');
