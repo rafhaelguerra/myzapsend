@@ -4,7 +4,7 @@ watchMsgs = function () {
     // config
     // const config_Aapp        = "patiobrasil"; //preencher
     // const config_Channel     = "OneAna123"; //preencher
-    const config_Aapp        = "privatepartners"; //preencher
+    const config_Aapp        = "patiobrasil"; //preencher
     const config_Channel     = "OneRafhael"; //preencher
     // const config_Chat_id     = "000001-ONE"; //dinamico
     const config_Chat_group  = "chat-private";
@@ -176,7 +176,7 @@ watchMsgs = function () {
                     // dd(JSON.stringify(dados));
 
                     // enviando para API
-                    /* fetch(endpoint,
+                    fetch(endpoint,
                         {
                             method: 'POST',
                             headers: {
@@ -198,7 +198,7 @@ watchMsgs = function () {
                             }
                 
                         })
-                        .catch((res) => dd('erro' + res))  */
+                        .catch((res) => dd('erro' + res)) 
 
                 } else  {
                     dd("==========================");
@@ -274,7 +274,7 @@ const getText = (elArr, typeMsg) => {
     // verifica se é ou tem menção
     if(_wrap.querySelector('.quoted-mention')){
         console.log('tem menção');
-        newMsg = `"<em><b>"${_wrap.querySelector('.quoted-mention').textContent}</b></em>`;
+        newMsg = `<em><b>${_wrap.querySelector('.quoted-mention').textContent}</b></em><br />`;
     }
 
     _wrap.querySelectorAll("span._ao3e:not(._ahxt)").forEach(element => {
