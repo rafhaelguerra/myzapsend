@@ -17,6 +17,9 @@ watchMsgs = function () {
         var msgs        = document.querySelectorAll('._amjv._aotl');
         var nameTo      = document.querySelectorAll('#main header .x1iyjqo2');
         var nameTo      = nameTo[0].innerHTML;
+
+        if(nameTo  == 'amor') return false;
+
         const dArr      = [...msgs];
         
         for (let index = 0; index < dArr.length; index++) {
@@ -136,13 +139,14 @@ watchMsgs = function () {
                     let idMensagem = dArr[index].getAttribute('data-id');
                     let idTelefoneDestinatario = dArr[index].getAttribute('data-id').split('_')[1].split('@')[0];
 
+                    console.log('_______________________start____________________________');
                     console.log('tipo de envio = ', typeMessage == 'message-out' ? 'remetente' : 'destinatário');
                     console.log('data mensagem = ' + timeMEssage);
                     dd('mensagem = ' + mensagem, typeMessage == 'message-out' ? 'purple' : 'pink', typeMessage == 'message-out' ? 'white' : 'black');
                     console.log('id mensagem = '  + idMensagem);
                     console.log('Tel destinatário = '  + idTelefoneDestinatario);
                     console.log('name to = '  + nameTo);
-                    console.log('___________________________________________________');
+                    
 
                     dadosMsg[index] = {
                         "message_id": idMensagem,
@@ -168,6 +172,7 @@ watchMsgs = function () {
 
                     console.log(dados);
                     console.log(dArr[index]);
+                    console.log('_________________________end_______________________');
                     // dd(JSON.stringify(dados));
 
                     // enviando para API
@@ -264,7 +269,18 @@ const getDateTime  = (elArr) => {
 // pega textos da  conversa
 const getText = (elArr, typeMsg) => {
     let newMsg = "";
-    elArr.querySelector("." + typeMsg).querySelector("span[dir].copyable-text").querySelectorAll("span").forEach(element => {
+    let _wrap = elArr.querySelector("." + typeMsg).querySelector(".copyable-text");
+
+    // verifica se é ou tem menção
+    if(_wrap.querySelector('.quoted-mention')){
+        console.log('tem menção');
+        newMsg = `"<em><b>"${_wrap.querySelector('.quoted-mention').textContent}</b></em>`;
+    }
+
+    _wrap.querySelectorAll("span._ao3e:not(._ahxt)").forEach(element => {
+        if(element.classList.contains('quoted-mention')){
+            console.log('tm citação');
+        }
         newMsg +=  element.textContent;
     });
     return newMsg;
