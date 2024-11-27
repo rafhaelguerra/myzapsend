@@ -181,7 +181,7 @@ watchMsgs = function () {
                     // dd(JSON.stringify(dados));
 
                     // enviando para API
-                    /* fetch(endpoint,
+                    fetch(endpoint,
                         {
                             method: 'POST',
                             headers: {
@@ -203,7 +203,7 @@ watchMsgs = function () {
                             }
                 
                         })
-                        .catch((res) => dd('erro' + res))  */
+                        .catch((res) => dd('erro' + res)) 
 
                 } else  {
                     dd("==========================");
@@ -215,9 +215,9 @@ watchMsgs = function () {
         }
                
         
-        /* setTimeout(() => {
+        setTimeout(() => {
             watchMsgs();
-        }, 10000); */
+        }, 10000);
 
 }
 
