@@ -129,19 +129,8 @@ watchMsgs = function () {
 
                     } else {
 
-                        timeMEssage = dArr[index].querySelector('.copyable-text').getAttribute('data-pre-plain-text').split('[')[1].split(']')[0]; // 12:38, 19/11/2024
-                        timeMEssage = timeMEssage.replace(/\s/g, '');
-                        timeMEssage = timeMEssage.split(',');
-                        let strDate = timeMEssage[1].split('/');  
-                        strDate = `${strDate[2]}-${strDate[1]}-${strDate[0]}`;
-                        let strHour = timeMEssage[0]+":00";
-
-                        timeMEssage = strDate + " " +strHour;
-
-                        dArr[index].querySelector("." + typeMessage).querySelector("span[dir]").querySelectorAll("span").forEach(element => {
-                            mensagem +=  element.textContent;
-                        }); 
-
+                        timeMEssage = getDateTime(dArr[index]);
+                        mensagem    = getText(dArr[index], typeMessage);
                     }
 
                     let idMensagem = dArr[index].getAttribute('data-id');
@@ -178,10 +167,11 @@ watchMsgs = function () {
                     };
 
                     console.log(dados);
+                    console.log(dArr[index]);
                     // dd(JSON.stringify(dados));
 
                     // enviando para API
-                    fetch(endpoint,
+                    /* fetch(endpoint,
                         {
                             method: 'POST',
                             headers: {
@@ -203,7 +193,7 @@ watchMsgs = function () {
                             }
                 
                         })
-                        .catch((res) => dd('erro' + res)) 
+                        .catch((res) => dd('erro' + res))  */
 
                 } else  {
                     dd("==========================");
@@ -215,9 +205,9 @@ watchMsgs = function () {
         }
                
         
-        setTimeout(() => {
+  /*       setTimeout(() => {
             watchMsgs();
-        }, 10000);
+        }, 10000); */
 
 }
 
@@ -250,6 +240,26 @@ watchMsgs = function () {
         })
         .catch((res) => dd('erro' + res)) 
 } */
+
+// ega horario / data
+const getDateTime  = (elArr) => {
+    var tDate = "";
+    if(elArr.querySelector('.copyable-text').getAttribute('data-pre-plain-text')) {
+
+        tDate = elArr.querySelector('.copyable-text').getAttribute('data-pre-plain-text').split('[')[1].split(']')[0]; // 12:38, 19/11/2024
+        tDate = tDate.replace(/\s/g, '');
+        tDate = tDate.split(',');
+        let strDate = tDate[1].split('/');  
+        strDate = `${strDate[2]}-${strDate[1]}-${strDate[0]}`;
+        let strHour = tDate[0]+":00";
+    
+        tDate = strDate + " " +strHour;
+    } else {
+        tDate = "";
+    }
+
+    return  tDate;
+}
 
 // pega textos da  conversa
 const getText = (elArr, typeMsg) => {
