@@ -254,9 +254,18 @@ const getDateTime  = (elArr) => {
         tDate = elArr.querySelector('.copyable-text').getAttribute('data-pre-plain-text').split('[')[1].split(']')[0]; // 12:38, 19/11/2024
         tDate = tDate.replace(/\s/g, '');
         tDate = tDate.split(',');
+        
+        // segundos  via js da maquina local
+        const d = new Date();
+        let seconds = d.getSeconds().toString();
+        seconds = seconds.length < 2 ? "0"+seconds  : seconds;
+
+        // data vinda do whats
         let strDate = tDate[1].split('/');  
         strDate = `${strDate[2]}-${strDate[1]}-${strDate[0]}`;
-        let strHour = tDate[0]+":00";
+        
+        // horas vinda do whats
+        let strHour = tDate[0]+":"+seconds;
     
         tDate = strDate + " " +strHour;
     } else {
