@@ -176,7 +176,7 @@ watchMsgs = function () {
                     // dd(JSON.stringify(dados));
 
                     // enviando para API
-                    fetch(endpoint,
+                    /* fetch(endpoint,
                         {
                             method: 'POST',
                             headers: {
@@ -198,7 +198,7 @@ watchMsgs = function () {
                             }
                 
                         })
-                        .catch((res) => dd('erro' + res)) 
+                        .catch((res) => dd('erro' + res))  */
 
                 } else  {
                     dd("==========================");
@@ -282,16 +282,23 @@ const getText = (elArr, typeMsg) => {
 
     // verifica se é ou tem menção
     if(_wrap.querySelector('.quoted-mention')){
-        console.log('tem menção');
-        newMsg = `<em><b>${_wrap.querySelector('.quoted-mention').textContent}</b></em><br />`;
+        if(_wrap.querySelector('._ahxj')){
+            console.log(_wrap.querySelector('._ahxj'));
+            // debugger;
+            newMsg = `<b>${_wrap.querySelector('span._ao3e').textContent}</b>:`;
+            newMsg += `<em>${_wrap.querySelector('.quoted-mention').textContent}</em><br />`;
+            /* _wrap.querySelector('._akbu').querySelectorAll("span:not(._ahxt)").forEach(element => {
+                newMsg +=  element.textContent;
+            }); */
+            newMsg += _wrap.querySelector('._akbu').querySelector("span:not(._ahxt)").textContent;
+        }
+    } else {
+        _wrap.querySelectorAll("span._ao3e:not(._ahxt)").forEach(element => {
+            newMsg +=  element.textContent;
+        });
+
     }
 
-    _wrap.querySelectorAll("span._ao3e:not(._ahxt)").forEach(element => {
-        if(element.classList.contains('quoted-mention')){
-            console.log('tm citação');
-        }
-        newMsg +=  element.textContent;
-    });
     return newMsg;
 }
 
